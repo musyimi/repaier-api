@@ -43,6 +43,14 @@ public class Repair {
         this.phone_number = phone_number;
     }
 
+    public Repair( String name, String title, String brand, String issue, Integer phone_number) {
+        this.name = name;
+        this.title = title;
+        this.brand = brand;
+        this.issue = issue;
+        this.phone_number = phone_number;
+    }
+
     public Integer getId() {
         return id;
     }

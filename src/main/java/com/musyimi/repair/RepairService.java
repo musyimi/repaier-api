@@ -1,6 +1,7 @@
 package com.musyimi.repair;
 
 import com.musyimi.exception.ResourceNotFoundException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ public class RepairService {
 
     private final RepairDao repairDao;
 
-    public RepairService(RepairDao repairDao) {
+    public RepairService(@Qualifier("jpa") RepairDao repairDao) {
         this.repairDao = repairDao;
     }
 
