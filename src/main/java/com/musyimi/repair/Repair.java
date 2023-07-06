@@ -1,13 +1,31 @@
 package com.musyimi.repair;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
 public class Repair {
+
+    @Id
+    @SequenceGenerator(
+            name = "repair_id_sequence",
+            sequenceName = "repair_id_sequence"
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "repair_id_sequence"
+    )
     private Integer id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
     private String brand;
+    @Column(nullable = false)
     private Integer phone_number;
+    @Column(nullable = false)
     private String issue;
 
     public Repair(){}
