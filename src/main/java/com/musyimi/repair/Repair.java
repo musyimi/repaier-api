@@ -30,9 +30,6 @@ public class Repair {
 
     public Repair(){}
 
-    public Repair(Integer phone_number) {
-        this.phone_number = phone_number;
-    }
 
     public Repair(Integer id, String name, String title, String brand, String issue, Integer phone_number) {
         this.id = id;

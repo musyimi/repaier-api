@@ -39,6 +39,17 @@ public class RepairDataAccessService implements RepairDao{
     }
 
     @Override
+    public void insertRepair(Repair repair) {
+         repairs.add(repair);
+    }
+
+    @Override
+    public boolean existsPersonWithPhoneNumber(String phone_number) {
+        return repairs.stream()
+                .anyMatch(c -> c.getPhone_number().equals(phone_number));
+    }
+
+    @Override
     public Optional<Repair> selectRepairById(Integer id) {
         return repairs.stream()
                 .filter(c -> c.getId().equals(id))

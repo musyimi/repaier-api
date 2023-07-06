@@ -19,8 +19,20 @@ public class RepairJPADataAccessService implements RepairDao{
         return repairRepository.findAll();
     }
 
+
+    @Override
+    public void insertRepair(Repair repair) {
+        repairRepository.save(repair);
+    }
+
+
     @Override
     public Optional<Repair> selectRepairById(Integer id) {
         return repairRepository.findById(id);
+    }
+
+    @Override
+    public boolean existsPersonWithPhoneNumber(Integer phone_number) {
+       return repairRepository.existsPersonWithPhoneNumber(phone_number);
     }
 }

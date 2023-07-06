@@ -6,4 +6,6 @@ import java.util.Optional;
 public interface RepairDao {
     List<Repair> selectAllRepairs();
     Optional<Repair> selectRepairById(Integer id);
+    void insertRepair(Repair repair);
+    boolean existsPersonWithPhoneNumber(Integer phone_number);
 }

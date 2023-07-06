@@ -1,5 +1,6 @@
 package com.musyimi.repair;
 
+import com.musyimi.exception.DuplicateResourceException;
 import com.musyimi.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -26,4 +27,28 @@ public class RepairService {
                         () -> new ResourceNotFoundException("customer with id [%s] is not found ".formatted(id))
                 );
     }
+
+    public void addRepair(RepairRegistrationRequest repairRegistrationRequest) {
+
+        Integer phone_number = repairRegistrationRequest.phone_number();
+        if (repairDao.existsPersonWithPhoneNumber(phone_number))
+          throw new DuplicateResourceException(
+                  "Phone number already Taken"
+        );
+
+        Repair repair =  new Repair(
+                repairRegistrationRequest.phone_number(),
+                repairRegistrationRequest.name(),
+                repairRegistrationRequest.title(),
+                repairRegistrationRequest.brand(),
+                repairRegistrationRequest.issue()
+        );
+
+
+        repairDao.insertRepair(
+              repair
+        );
+    }
+
+
 }
