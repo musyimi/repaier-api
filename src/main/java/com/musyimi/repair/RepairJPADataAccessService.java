@@ -21,6 +21,6 @@ public class RepairJPADataAccessService implements RepairDao{
 
     @Override
     public Optional<Repair> selectRepairById(Integer id) {
-        return Optional.empty();
+        return repairRepository.findById(id);
     }
 }
