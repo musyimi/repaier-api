@@ -28,27 +28,22 @@ public class RepairService {
                 );
     }
 
-    public void addRepair(RepairRegistrationRequest repairRegistrationRequest) {
-
+    public void addRepair(
+            RepairRegistrationRequest repairRegistrationRequest) {
         Integer phone_number = repairRegistrationRequest.phone_number();
-        if (repairDao.existsPersonWithPhoneNumber(phone_number))
-          throw new DuplicateResourceException(
-                  "Phone number already Taken"
-        );
 
-        Repair repair =  new Repair(
-                repairRegistrationRequest.phone_number(),
+        if (repairDao.existsPersonWithPhoneNumber(phone_number)) {
+            throw new DuplicateResourceException(
+                    "Phone Number already in use"
+            );
+        }
+        Repair repair = new Repair(
                 repairRegistrationRequest.name(),
                 repairRegistrationRequest.title(),
                 repairRegistrationRequest.brand(),
-                repairRegistrationRequest.issue()
+                repairRegistrationRequest.issue(),
+                repairRegistrationRequest.phone_number()
         );
-
-
-        repairDao.insertRepair(
-              repair
-        );
+        repairDao.insertRepair(repair);
     }
-
-
 }
