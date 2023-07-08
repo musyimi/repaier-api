@@ -33,6 +33,7 @@ public class RepairJPADataAccessService implements RepairDao{
 
     @Override
     public boolean existsPersonWithPhoneNumber(Integer phone_number) {
-       return repairRepository.existsPersonWithPhoneNumber(phone_number);
+        return repairRepository.existsRepairByPhoneNumber(phone_number);
+
     }
 }
