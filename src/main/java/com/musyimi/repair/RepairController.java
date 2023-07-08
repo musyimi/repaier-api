@@ -1,13 +1,12 @@
 package com.musyimi.repair;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 
 @RestController
+@RequestMapping("api/v1/repairs")
 public class RepairController {
 
     private final RepairService repairService;
@@ -16,13 +15,20 @@ public class RepairController {
         this.repairService = repairService;
     }
 
-    @GetMapping(path = "api/v1/repairs")
+    @GetMapping
     public List<Repair> getRepairs() {
         return repairService.getAllRepairs();
     }
 
-    @GetMapping(path = "api/v1/repairs/{id}")
+    @GetMapping("{id}")
     public Repair getRepair(@PathVariable("id") Integer id) {
         return repairService.getRepair(id);
+    }
+
+
+    @PostMapping
+    public void registerRepair(
+            @RequestBody RepairRegistrationRequest request) {
+        repairService.addRepair(request);
     }
 }
