@@ -1,0 +1,8 @@
+CREATE TABLE repair(
+  id BIGSERIAL PRIMARY KEY,
+  name TEXT NOT NULL,
+  title TEXT NOT NULL,
+  brand TEXT NOT NULL,
+  issue TEXT NOT NULL,
+  phoneNumber INT NOT NULL
+);

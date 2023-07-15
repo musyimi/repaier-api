@@ -42,7 +42,7 @@ public class Main {
             );
 
             List<Repair> repairs = List.of(phone, laptop);
-            repairRepository.saveAll(repairs);
+           // repairRepository.saveAll(repairs);
 
         };
     }
