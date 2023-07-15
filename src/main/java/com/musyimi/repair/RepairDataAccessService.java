@@ -49,6 +49,19 @@ public class RepairDataAccessService implements RepairDao{
                 .anyMatch(c -> c.getphoneNumber().equals(phoneNumber));
     }
 
+    @Override
+    public boolean existsRepairWithId(Integer id) {
+        return repairs.stream()
+                .anyMatch(c -> c.getId().equals(id));
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        repairs.stream()
+                .filter(c -> c.getId().equals(id))
+                .findFirst()
+                .ifPresent(repairs::remove);
+    }
 
     @Override
     public Optional<Repair> selectRepairById(Integer id) {
@@ -56,5 +69,10 @@ public class RepairDataAccessService implements RepairDao{
                 .filter(c -> c.getId().equals(id))
                 .findFirst();
 
+    }
+
+    @Override
+    public void updateRepair(Repair repair) {
+        repairs.add(repair);
     }
 }

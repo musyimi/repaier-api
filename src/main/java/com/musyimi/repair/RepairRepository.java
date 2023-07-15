@@ -8,4 +8,8 @@ public interface RepairRepository extends JpaRepository<Repair, Integer> {
 
    @Query
    boolean existsRepairByPhoneNumber(Integer phoneNumber);
+
+   boolean existsRepairById(Integer id);
+
+
 }

@@ -31,6 +31,20 @@ public class RepairJPADataAccessService implements RepairDao{
 
     }
 
+    @Override
+    public boolean existsRepairWithId(Integer id) {
+        return repairRepository.existsRepairById(id);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        repairRepository.deleteById(id);
+    }
+
+    @Override
+    public void updateRepair(Repair update) {
+        repairRepository.save(update);
+    }
 
     @Override
     public Optional<Repair> selectRepairById(Integer id) {
