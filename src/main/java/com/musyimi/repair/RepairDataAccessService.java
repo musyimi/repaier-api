@@ -44,9 +44,9 @@ public class RepairDataAccessService implements RepairDao{
     }
 
     @Override
-    public boolean existsPersonWithPhoneNumber(Integer phone_number) {
+    public boolean existsPersonWithPhoneNumber(Integer phoneNumber) {
         return repairs.stream()
-                .anyMatch(c -> c.getPhone_number().equals(phone_number));
+                .anyMatch(c -> c.getphoneNumber().equals(phoneNumber));
     }
 
 

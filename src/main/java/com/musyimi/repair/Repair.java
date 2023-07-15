@@ -24,40 +24,40 @@ public class Repair {
     @Column(nullable = false)
     private String brand;
     @Column(nullable = false)
-    private Integer phone_number;
+    private Integer phoneNumber;
     @Column(nullable = false)
     private String issue;
 
     public Repair(){}
 
 
-    public Repair(Integer id, String name, String title, String brand, String issue, Integer phone_number) {
+    public Repair(Integer id, String name, String title, String brand, String issue, Integer phoneNumber) {
         this.id = id;
         this.name = name;
         this.title = title;
         this.brand = brand;
         this.issue = issue;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
 
-    public Repair( String name, String title, String brand, String issue, Integer phone_number) {
+    public Repair( String name, String title, String brand, String issue, Integer phoneNumber) {
         this.name = name;
         this.title = title;
         this.brand = brand;
         this.issue = issue;
-        this.phone_number = phone_number;
+        this.phoneNumber = phoneNumber;
     }
 
     public Integer getId() {
         return id;
     }
 
-    public Integer getPhone_number() {
-        return phone_number;
+    public Integer getphoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone_number(Integer phone_number) {
-        this.phone_number = phone_number;
+    public void setphoneNumber(Integer phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public void setId(Integer id) {
@@ -101,13 +101,13 @@ public class Repair {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Repair repair = (Repair) o;
-        return Objects.equals(id, repair.id) && Objects.equals(name, repair.name) && Objects.equals(title, repair.title) && Objects.equals(brand, repair.brand) && Objects.equals(phone_number, repair.phone_number) && Objects.equals(issue, repair.issue);
+        return Objects.equals(id, repair.id) && Objects.equals(name, repair.name) && Objects.equals(title, repair.title) && Objects.equals(brand, repair.brand) && Objects.equals(phoneNumber, repair.phoneNumber) && Objects.equals(issue, repair.issue);
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, title, brand, phone_number, issue);
+        return Objects.hash(id, name, title, brand, phoneNumber, issue);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Repair {
                 ", name='" + name + '\'' +
                 ", title='" + title + '\'' +
                 ", brand='" + brand + '\'' +
-                ", phone_number=" + phone_number +
+                ", phoneNumber=" + phoneNumber +
                 ", issue='" + issue + '\'' +
                 '}';
     }

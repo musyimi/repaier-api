@@ -30,9 +30,10 @@ public class RepairService {
 
     public void addRepair(
             RepairRegistrationRequest repairRegistrationRequest) {
-        Integer phone_number = repairRegistrationRequest.phone_number();
 
-        if (repairDao.existsPersonWithPhoneNumber(phone_number)) {
+        Integer phoneNumber = repairRegistrationRequest.phoneNumber();
+
+        if (repairDao.existsPersonWithPhoneNumber(repairRegistrationRequest.phoneNumber())) {
             throw new DuplicateResourceException(
                     "Phone Number already in use"
             );
@@ -42,7 +43,7 @@ public class RepairService {
                 repairRegistrationRequest.title(),
                 repairRegistrationRequest.brand(),
                 repairRegistrationRequest.issue(),
-                repairRegistrationRequest.phone_number()
+                repairRegistrationRequest.phoneNumber()
         );
         repairDao.insertRepair(repair);
     }

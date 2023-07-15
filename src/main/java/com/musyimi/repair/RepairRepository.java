@@ -1,8 +1,11 @@
 package com.musyimi.repair;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 
 public interface RepairRepository extends JpaRepository<Repair, Integer> {
 
-   boolean existsRepairByPhoneNumber(Integer phone_number);
+   @Query
+   boolean existsRepairByPhoneNumber(Integer phoneNumber);
 }
