@@ -5,16 +5,27 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
+@Table(
+        name = "repair",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "repair_phonenumber_unique",
+                        columnNames = "phoneNumber"
+                )
+        }
+)
 public class Repair {
 
     @Id
     @SequenceGenerator(
-            name = "repair_id_sequence",
-            sequenceName = "repair_id_sequence"
+            name = "repair_id_seq",
+            sequenceName = "repair_id_seq",
+            initialValue = 1,
+            allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "repair_id_sequence"
+            generator = "repair_id_seq"
     )
     private Integer id;
     @Column(nullable = false)
@@ -23,7 +34,8 @@ public class Repair {
     private String title;
     @Column(nullable = false)
     private String brand;
-    @Column(nullable = false)
+    @Column(
+            nullable = false)
     private Integer phoneNumber;
     @Column(nullable = false)
     private String issue;
