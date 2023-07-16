@@ -1,5 +1,6 @@
 package com.musyimi;
 
+import com.github.javafaker.Faker;
 import com.musyimi.repair.Repair;
 import com.musyimi.repair.RepairRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -26,23 +27,16 @@ public class Main {
     CommandLineRunner runner(RepairRepository repairRepository) {
 
         return args -> {
-            Repair phone = new Repair(
-                    "Mucomba",
-                    "Nokia 3310",
-                    "Nokia",
-                    "The phone is not charging",
-                    0722000000
-            );
-            Repair laptop = new Repair(
-                    "Ruger",
-                    "Lenovo 500",
-                    "Lenovo",
-                    "The Screen is broken",
-                    0722111111
+            var faker = new Faker();
+            Repair repair = new Repair(
+                    faker.name().fullName(),
+                    faker.name().title(),
+                    faker.company().name(),
+                    faker.book().publisher(),
+                    faker.hashCode()
             );
 
-            List<Repair> repairs = List.of(phone, laptop);
-            repairRepository.saveAll(repairs);
+            repairRepository.save(repair);
 
         };
     }
