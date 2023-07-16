@@ -14,7 +14,7 @@ public class RepairService {
 
     private final RepairDao repairDao;
 
-    public RepairService(@Qualifier("jpa") RepairDao repairDao) {
+    public RepairService(@Qualifier("jdbc") RepairDao repairDao) {
         this.repairDao = repairDao;
     }
 

@@ -34,8 +34,7 @@ public class Repair {
     private String title;
     @Column(nullable = false)
     private String brand;
-    @Column(
-            nullable = false)
+    @Column(nullable = false)
     private Integer phoneNumber;
     @Column(nullable = false)
     private String issue;
