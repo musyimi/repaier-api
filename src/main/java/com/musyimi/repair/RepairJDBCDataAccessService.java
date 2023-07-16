@@ -60,21 +60,84 @@ public class RepairJDBCDataAccessService implements RepairDao{
 
     @Override
     public boolean existsPersonWithPhoneNumber(Integer phoneNumber) {
-        return false;
+        var sql = """
+                SELECT count(id)
+                FROM repair
+                WHERE phoneNumber = ?
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, phoneNumber);
+        return count != null && count > 0;
     }
 
     @Override
     public boolean existsRepairWithId(Integer id) {
-        return false;
+        var sql = """
+                SELECT count(id)
+                FROM repair
+                WHERE id = ?
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, id);
+        return count != null && count > 0;
     }
 
     @Override
     public void deleteById(Integer id) {
+        var sql = """
+                DELETE
+                FROM repair
+                WHERE id = ?
+                """;
+        int result = jdbcTemplate.update(sql, id);
 
     }
 
     @Override
     public void updateRepair(Repair update) {
+        if (update.getName() != null) {
+            String sql = "UPDATE repair SET name = ? WHERE id = ?";
+            int result = jdbcTemplate.update(
+                    sql,
+                    update.getName(),
+                    update.getId()
+            );
+        }
+
+        if (update.getBrand() != null) {
+            String sql = "UPDATE repair SET brand = ? WHERE id = ?";
+            int result = jdbcTemplate.update(
+                    sql,
+                    update.getBrand(),
+                    update.getId()
+            );
+        }
+
+        if (update.getTitle() != null) {
+            String sql = "UPDATE repair SET title = ? WHERE id = ?";
+            int result = jdbcTemplate.update(
+                    sql,
+                    update.getTitle(),
+                    update.getId()
+            );
+        }
+
+        if (update.getIssue() != null) {
+            String sql = "UPDATE repair SET issue = ? WHERE id = ?";
+            int result = jdbcTemplate.update(
+                    sql,
+                    update.getIssue(),
+                    update.getId()
+            );
+        }
+
+        if (update.getphoneNumber() != null) {
+            String sql = "UPDATE repair SET phone_number = ? WHERE id = ?";
+            int result = jdbcTemplate.update(
+                    sql,
+                    update.getphoneNumber(),
+                    update.getId()
+            );
+        }
+
 
     }
 }
