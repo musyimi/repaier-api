@@ -32,7 +32,14 @@ public class RepairJDBCDataAccessService implements RepairDao{
 
     @Override
     public Optional<Repair> selectRepairById(Integer id) {
-        return Optional.empty();
+        var sql = """
+                SELECT id, name, title, issue, brand, phone_number
+                FROM repair
+                WHERE id = ?
+                """;
+        return jdbcTemplate.query(sql, repairRowMapper, id)
+                .stream()
+                .findFirst();
     }
 
     @Override
