@@ -11,9 +11,11 @@ import java.util.Optional;
 public class RepairJDBCDataAccessService implements RepairDao{
 
     private final JdbcTemplate jdbcTemplate;
+    private final RepairRowMapper repairRowMapper;
 
-    public RepairJDBCDataAccessService(JdbcTemplate jdbcTemplate) {
+    public RepairJDBCDataAccessService(JdbcTemplate jdbcTemplate, RepairRowMapper repairRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
+        this.repairRowMapper = repairRowMapper;
     }
 
 
@@ -23,19 +25,9 @@ public class RepairJDBCDataAccessService implements RepairDao{
                 SELECT id, name, title, issue, brand, phone_number
                 FROM repair
                 """;
-        RowMapper<Repair> repairRowMapper = (rs, rowNum) -> {
-            Repair repair = new Repair(
-                    rs.getInt("id"),
-                    rs.getString("name"),
-                    rs.getString("title"),
-                    rs.getString("issue"),
-                    rs.getString("brand"),
-                    rs.getInt("phone_number")
-            );
-            return repair;
-        };
-        List<Repair> repairs = jdbcTemplate.query(sql, repairRowMapper);
-        return repairs;
+
+        return jdbcTemplate.query(sql, repairRowMapper);
+
     }
 
     @Override
