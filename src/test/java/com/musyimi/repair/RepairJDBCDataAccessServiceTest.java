@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,18 +32,57 @@ class RepairJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
                 FAKER.name().title(),
                 FAKER.company().name(),
                 FAKER.book().publisher(),
-                FAKER.hashCode()
+                0722000000
         );
         underTest.insertRepair(repair);
 
-        List<Repair> repairs = underTest.selectAllRepairs();
+        List<Repair> actual = underTest.selectAllRepairs();
 
-        assertThat(repairs).isNotEmpty();
+        assertThat(actual).isNotEmpty();
 
     }
 
     @Test
     void selectRepairById() {
+        int phoneNumber = FAKER.hashCode();
+
+        Repair repair = new Repair(
+                FAKER.name().fullName(),
+                FAKER.name().title(),
+                FAKER.company().name(),
+                FAKER.book().publisher(),
+                phoneNumber
+        );
+
+        underTest.insertRepair(repair);
+
+        int id = underTest.selectAllRepairs()
+                .stream()
+                .filter(c -> c.getphoneNumber().equals(phoneNumber))
+                .map(Repair::getId)
+                .findFirst()
+                .orElseThrow();
+
+        Optional<Repair> actual = underTest.selectRepairById(id);
+
+        assertThat(actual).isPresent().hasValueSatisfying(c ->{
+            assertThat(c.getId()).isEqualTo(id);
+            assertThat(c.getName()).isEqualTo(repair.getName());
+            assertThat(c.getBrand()).isEqualTo(repair.getBrand());
+            assertThat(c.getTitle()).isEqualTo(repair.getTitle());
+            assertThat(c.getIssue()).isEqualTo(repair.getIssue());
+            assertThat(c.getphoneNumber()).isEqualTo(repair.getphoneNumber());
+        });
+
+    }
+
+    @Test
+    void willReturnEmptyWhenSelectRepairById() {
+        int id = -1;
+
+        var actual = underTest.selectRepairById(id);
+
+        assertThat(actual).isEmpty();
     }
 
     @Test
