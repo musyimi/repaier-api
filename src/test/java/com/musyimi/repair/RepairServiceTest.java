@@ -5,11 +5,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class RepairServiceTest {
@@ -30,7 +35,16 @@ class RepairServiceTest {
     }
 
     @Test
-    void getRepair() {
+    void canGetRepair() {
+        int id = 1;
+
+        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia", "Charging port", 800565222);
+        when(repairDao.selectRepairById(id))
+                .thenReturn(Optional.of(repair));
+
+        Repair actual = underTest.getRepair(1);
+
+        assertThat(actual).isEqualTo(repair);
     }
 
     @Test
