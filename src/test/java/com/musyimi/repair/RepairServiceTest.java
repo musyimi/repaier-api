@@ -1,5 +1,6 @@
 package com.musyimi.repair;
 
+import com.musyimi.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -45,6 +47,18 @@ class RepairServiceTest {
         Repair actual = underTest.getRepair(1);
 
         assertThat(actual).isEqualTo(repair);
+    }
+
+    @Test
+    void willThrowWhenRepairReturnEmptyOptional() {
+        int id = 1;
+
+        when(repairDao.selectRepairById(id))
+                .thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> underTest.getRepair(id))
+                .isInstanceOf(ResourceNotFoundException.class)
+                .hasMessage("Repair with id [%s] is not found".formatted(id));
     }
 
     @Test

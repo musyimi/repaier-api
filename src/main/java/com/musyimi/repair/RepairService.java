@@ -25,7 +25,7 @@ public class RepairService {
     public Repair getRepair(Integer id) {
         return repairDao.selectRepairById(id)
                 .orElseThrow(
-                        () -> new ResourceNotFoundException("customer with id [%s] is not found ".formatted(id))
+                        () -> new ResourceNotFoundException("Repair with id [%s] is not found".formatted(id))
                 );
     }
 
