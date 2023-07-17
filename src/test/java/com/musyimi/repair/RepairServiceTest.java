@@ -5,6 +5,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -63,6 +64,29 @@ class RepairServiceTest {
 
     @Test
     void addRepair() {
+        Integer phoneNumber = 800565222;
+
+        when(repairDao.existsPersonWithPhoneNumber(phoneNumber)).thenReturn(false);
+
+        RepairRegistrationRequest repairRegistrationRequest = new RepairRegistrationRequest(
+          "Zumba", "HP Envy", "HP", "nOT CHSRGING", 800565222
+        );
+
+        underTest.addRepair(repairRegistrationRequest);
+
+        ArgumentCaptor<Repair> repairArgumentCaptor =
+                ArgumentCaptor.forClass(Repair.class);
+
+        verify(repairDao).insertRepair(repairArgumentCaptor.capture());
+
+        Repair capturedRepair = repairArgumentCaptor.getValue();
+
+        assertThat(capturedRepair.getId()).isNull();
+        assertThat(capturedRepair.getName()).isEqualTo(repairRegistrationRequest.name());
+        assertThat(capturedRepair.getTitle()).isEqualTo(repairRegistrationRequest.title());
+        assertThat(capturedRepair.getBrand()).isEqualTo(repairRegistrationRequest.brand());
+        assertThat(capturedRepair.getIssue()).isEqualTo(repairRegistrationRequest.issue());
+        assertThat(capturedRepair.getphoneNumber()).isEqualTo(repairRegistrationRequest.phoneNumber());
     }
 
     @Test
