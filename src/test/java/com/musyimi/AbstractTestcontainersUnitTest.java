@@ -1,5 +1,6 @@
 package com.musyimi;
 
+import com.github.javafaker.Faker;
 import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -63,5 +64,7 @@ public abstract class AbstractTestcontainersUnitTest {
     protected static JdbcTemplate getJdbcTemplate() {
         return new JdbcTemplate(getDataSource());
     }
+
+    protected static final Faker FAKER = new Faker();
 
 }
