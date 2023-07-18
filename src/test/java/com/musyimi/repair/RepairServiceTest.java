@@ -1,5 +1,6 @@
 package com.musyimi.repair;
 
+import com.musyimi.exception.DuplicateResourceException;
 import com.musyimi.exception.ResourceNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +17,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class RepairServiceTest {
@@ -90,7 +90,47 @@ class RepairServiceTest {
     }
 
     @Test
+    void willThrowAnErrorIfPhoneNumberExistswhileaddingRepair() {
+        Integer phoneNumber = 800565222;
+
+        when(repairDao.existsPersonWithPhoneNumber(phoneNumber)).thenReturn(true);
+
+        RepairRegistrationRequest repairRegistrationRequest = new RepairRegistrationRequest(
+                "Zumba", "HP Envy", "HP", "not cgharging", 800565222
+        );
+
+        assertThatThrownBy(() -> underTest.addRepair(repairRegistrationRequest))
+                .isInstanceOf(DuplicateResourceException.class)
+                .hasMessage("Phone Number already in use");
+
+        verify(repairDao, never()).insertRepair(any());
+
+       }
+
+    @Test
     void deleteById() {
+        int id = 1;
+
+        when(repairDao.existsRepairWithId(id)).thenReturn(true);
+
+        underTest.deleteById(id);
+
+        verify(repairDao).deleteById(id);
+
+    }
+
+    @Test
+    void willThrowDeleteByIdNotFound() {
+        int id = 1;
+
+        when(repairDao.existsRepairWithId(id)).thenReturn(false);
+
+        assertThatThrownBy(() -> underTest.deleteById(id))
+                .isInstanceOf(ResourceNotFoundException.class)
+                        .hasMessage("Repair with id [%s] not found".formatted(id));
+
+        verify(repairDao, never()).deleteById(id);
+
     }
 
     @Test
