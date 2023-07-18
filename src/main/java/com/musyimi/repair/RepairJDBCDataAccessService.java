@@ -63,7 +63,7 @@ public class RepairJDBCDataAccessService implements RepairDao{
         var sql = """
                 SELECT count(id)
                 FROM repair
-                WHERE phoneNumber = ?
+                WHERE phone_number = ?
                 """;
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class, phoneNumber);
         return count != null && count > 0;
