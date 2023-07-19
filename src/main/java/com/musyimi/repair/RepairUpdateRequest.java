@@ -4,7 +4,7 @@ public record RepairUpdateRequest(
         String name,
         String title,
         String brand,
-        Integer phoneNumber,
+        String phoneNumber,
         String issue
 ) {
 }

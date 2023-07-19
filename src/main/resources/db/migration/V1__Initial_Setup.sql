@@ -6,5 +6,5 @@ CREATE TABLE repair(
   title TEXT NOT NULL,
   brand TEXT NOT NULL,
   issue TEXT NOT NULL,
-  phone_number INT
+  phone_number TEXT NOT NULL
 );

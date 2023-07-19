@@ -5,7 +5,7 @@ public record RepairRegistrationRequest(
         String title,
         String brand,
         String issue,
-        Integer phoneNumber
+        String phoneNumber
 ) {
 
 }

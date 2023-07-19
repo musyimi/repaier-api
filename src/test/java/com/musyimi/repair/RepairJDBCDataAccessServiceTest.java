@@ -32,13 +32,13 @@ class RepairJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
                 FAKER.name().title(),
                 FAKER.company().name(),
                 FAKER.book().publisher(),
-                0722000000
+                FAKER.phoneNumber().cellPhone()
         );
         underTest.insertRepair(repair);
 
-        List<Repair> actual = underTest.selectAllRepairs();
+        List<Repair> repairs = underTest.selectAllRepairs();
 
-        assertThat(actual).isNotEmpty();
+        assertThat(repairs).isNotEmpty();
 
     }
 
@@ -51,7 +51,8 @@ class RepairJDBCDataAccessServiceTest extends AbstractTestcontainersUnitTest {
                 FAKER.name().title(),
                 FAKER.company().name(),
                 FAKER.book().publisher(),
-                phoneNumber
+                FAKER.phoneNumber().cellPhone()
+
         );
 
         underTest.insertRepair(repair);

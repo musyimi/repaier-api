@@ -59,7 +59,7 @@ public class RepairJDBCDataAccessService implements RepairDao{
     }
 
     @Override
-    public boolean existsPersonWithPhoneNumber(Integer phoneNumber) {
+    public boolean existsPersonWithPhoneNumber(String phoneNumber) {
         var sql = """
                 SELECT count(id)
                 FROM repair

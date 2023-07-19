@@ -42,7 +42,12 @@ class RepairServiceTest {
     void canGetRepair() {
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia", "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
@@ -65,12 +70,13 @@ class RepairServiceTest {
 
     @Test
     void addRepair() {
-        Integer phoneNumber = 800565222;
+
+        String phoneNumber = "800565222";
 
         when(repairDao.existsPersonWithPhoneNumber(phoneNumber)).thenReturn(false);
 
         RepairRegistrationRequest repairRegistrationRequest = new RepairRegistrationRequest(
-          "Zumba", "HP Envy", "HP", "nOT CHSRGING", 800565222
+          "Zumba", "HP Envy", "HP", "nOT CHSRGING", "800565222"
         );
 
         underTest.addRepair(repairRegistrationRequest);
@@ -92,12 +98,12 @@ class RepairServiceTest {
 
     @Test
     void willThrowAnErrorIfPhoneNumberExistswhileaddingRepair() {
-        Integer phoneNumber = 800565222;
+        String phoneNumber = "800565222";
 
         when(repairDao.existsPersonWithPhoneNumber(phoneNumber)).thenReturn(true);
 
         RepairRegistrationRequest repairRegistrationRequest = new RepairRegistrationRequest(
-                "Zumba", "HP Envy", "HP", "not cgharging", 800565222
+                "Zumba", "HP Envy", "HP", "not cgharging", "800565222"
         );
 
         assertThatThrownBy(() -> underTest.addRepair(repairRegistrationRequest))
@@ -134,27 +140,39 @@ class RepairServiceTest {
 
     }
 
+
     @Test
     void canUpdateAllRepairProperties() {
+
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia",
-                "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
+        String newphoneNumber = "0700000000";
         RepairUpdateRequest updateRequest = new RepairUpdateRequest(
-                "Kamah", "Nokia 3310", "Nokaya",700000000, "Not charging"
+                "Komu",
+                "Nokia",
+                "Nokia",
+                newphoneNumber,
+                "Not charging"
+
         );
 
-        when(repairDao.existsPersonWithPhoneNumber(700000000)).thenReturn(false);
+        when(repairDao.existsPersonWithPhoneNumber(newphoneNumber)).thenReturn(false);
 
         underTest.updateRepair(id, updateRequest);
-
-        ArgumentCaptor<Repair> repairArgumentCaptor = ArgumentCaptor.forClass(Repair.class);
-
+        
+        ArgumentCaptor<Repair> repairArgumentCaptor = 
+                ArgumentCaptor.forClass(Repair.class);
+        
         verify(repairDao).updateRepair(repairArgumentCaptor.capture());
-
         Repair capturedRepair = repairArgumentCaptor.getValue();
 
         assertThat(capturedRepair.getphoneNumber()).isEqualTo(updateRequest.phoneNumber());
@@ -167,24 +185,35 @@ class RepairServiceTest {
     }
 
     @Test
-    void canUpdateOnlyRepairName() {
+    void canOnlyUpdateRepairName() {
+
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia",
-                "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
         RepairUpdateRequest updateRequest = new RepairUpdateRequest(
-                "Kamah", null, null,null, null
+                "Komu",
+                null,
+                null,
+                null,
+                null
+
         );
+
 
         underTest.updateRepair(id, updateRequest);
 
-        ArgumentCaptor<Repair> repairArgumentCaptor = ArgumentCaptor.forClass(Repair.class);
+        ArgumentCaptor<Repair> repairArgumentCaptor =
+                ArgumentCaptor.forClass(Repair.class);
 
         verify(repairDao).updateRepair(repairArgumentCaptor.capture());
-
         Repair capturedRepair = repairArgumentCaptor.getValue();
 
         assertThat(capturedRepair.getphoneNumber()).isEqualTo(repair.getphoneNumber());
@@ -197,29 +226,43 @@ class RepairServiceTest {
     }
 
     @Test
-    void canUpdateOnlyRepairTitle() {
+    void canOnlyUpdateRepairPhoneNumber() {
+
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia",
-                "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
+        String newphoneNumber = "0700000000";
         RepairUpdateRequest updateRequest = new RepairUpdateRequest(
-                null, "Nokia", null,null, null
+                null,
+                null,
+                null,
+                newphoneNumber,
+                null
+
         );
+
+        when(repairDao.existsPersonWithPhoneNumber(newphoneNumber)).thenReturn(false);
+
 
         underTest.updateRepair(id, updateRequest);
 
-        ArgumentCaptor<Repair> repairArgumentCaptor = ArgumentCaptor.forClass(Repair.class);
+        ArgumentCaptor<Repair> repairArgumentCaptor =
+                ArgumentCaptor.forClass(Repair.class);
 
         verify(repairDao).updateRepair(repairArgumentCaptor.capture());
-
         Repair capturedRepair = repairArgumentCaptor.getValue();
 
-        assertThat(capturedRepair.getphoneNumber()).isEqualTo(repair.getphoneNumber());
+        assertThat(capturedRepair.getphoneNumber()).isEqualTo(newphoneNumber);
         assertThat(capturedRepair.getName()).isEqualTo(repair.getName());
-        assertThat(capturedRepair.getTitle()).isEqualTo(updateRequest.title());
+        assertThat(capturedRepair.getTitle()).isEqualTo(repair.getTitle());
         assertThat(capturedRepair.getIssue()).isEqualTo(repair.getIssue());
         assertThat(capturedRepair.getBrand()).isEqualTo(repair.getBrand());
 
@@ -227,24 +270,35 @@ class RepairServiceTest {
     }
 
     @Test
-    void canUpdateOnlyRepairBrand() {
+    void canOnlyUpdateRepairBrand() {
+
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia",
-                "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
         RepairUpdateRequest updateRequest = new RepairUpdateRequest(
-                null, null, "Samsung",null, null
+                null,
+                null,
+                "Panasonic",
+                null,
+                null
+
         );
+
 
         underTest.updateRepair(id, updateRequest);
 
-        ArgumentCaptor<Repair> repairArgumentCaptor = ArgumentCaptor.forClass(Repair.class);
+        ArgumentCaptor<Repair> repairArgumentCaptor =
+                ArgumentCaptor.forClass(Repair.class);
 
         verify(repairDao).updateRepair(repairArgumentCaptor.capture());
-
         Repair capturedRepair = repairArgumentCaptor.getValue();
 
         assertThat(capturedRepair.getphoneNumber()).isEqualTo(repair.getphoneNumber());
@@ -257,24 +311,35 @@ class RepairServiceTest {
     }
 
     @Test
-    void canUpdateOnlyRepairIssue() {
+    void canOnlyUpdateRepairIssue() {
+
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia",
-                "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
         RepairUpdateRequest updateRequest = new RepairUpdateRequest(
-                null, null, null,null, "Power IC issue"
+                null,
+                null,
+                null,
+                null,
+                "Speaker is Damaged"
+
         );
+
 
         underTest.updateRepair(id, updateRequest);
 
-        ArgumentCaptor<Repair> repairArgumentCaptor = ArgumentCaptor.forClass(Repair.class);
+        ArgumentCaptor<Repair> repairArgumentCaptor =
+                ArgumentCaptor.forClass(Repair.class);
 
         verify(repairDao).updateRepair(repairArgumentCaptor.capture());
-
         Repair capturedRepair = repairArgumentCaptor.getValue();
 
         assertThat(capturedRepair.getphoneNumber()).isEqualTo(repair.getphoneNumber());
@@ -287,29 +352,40 @@ class RepairServiceTest {
     }
 
     @Test
-    void canUpdateOnlyRepairPhoneNumber() {
+    void canOnlyUpdateRepairTitle() {
+
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia",
-                "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
         RepairUpdateRequest updateRequest = new RepairUpdateRequest(
-                null, null, null,900000111, null
+                null,
+                "Panasonic v1",
+                null,
+                null,
+                null
+
         );
+
 
         underTest.updateRepair(id, updateRequest);
 
-        ArgumentCaptor<Repair> repairArgumentCaptor = ArgumentCaptor.forClass(Repair.class);
+        ArgumentCaptor<Repair> repairArgumentCaptor =
+                ArgumentCaptor.forClass(Repair.class);
 
         verify(repairDao).updateRepair(repairArgumentCaptor.capture());
-
         Repair capturedRepair = repairArgumentCaptor.getValue();
 
-        assertThat(capturedRepair.getphoneNumber()).isEqualTo(updateRequest.phoneNumber());
+        assertThat(capturedRepair.getphoneNumber()).isEqualTo(repair.getphoneNumber());
         assertThat(capturedRepair.getName()).isEqualTo(repair.getName());
-        assertThat(capturedRepair.getTitle()).isEqualTo(repair.getTitle());
+        assertThat(capturedRepair.getTitle()).isEqualTo(updateRequest.title());
         assertThat(capturedRepair.getIssue()).isEqualTo(repair.getIssue());
         assertThat(capturedRepair.getBrand()).isEqualTo(repair.getBrand());
 
@@ -317,19 +393,31 @@ class RepairServiceTest {
     }
 
     @Test
-    void willThrowWhenRepairPhoneNumberExists() {
+    void willThrowwhenUpdatePhoneNumberAlreadyTaken() {
+
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia",
-                "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
+        String newphoneNumber = "0700000000";
         RepairUpdateRequest updateRequest = new RepairUpdateRequest(
-                null, null, null,900000111, null
+                null,
+                null,
+                null,
+                newphoneNumber,
+                null
+
         );
 
-        when(repairDao.existsPersonWithPhoneNumber(900000111)).thenReturn(true);
+        when(repairDao.existsPersonWithPhoneNumber(newphoneNumber)).thenReturn(true);
+
 
         assertThatThrownBy(() -> underTest.updateRepair(id, updateRequest))
                 .isInstanceOf(DuplicateResourceException.class)
@@ -341,11 +429,16 @@ class RepairServiceTest {
     }
 
     @Test
-    void willThrowWhenNoChangesDone() {
+    void willThrowWhenNoChangesMade() {
+
         int id = 1;
 
-        Repair repair = new Repair("Kamau", "Nikia 3300", "Nokia",
-                "Charging port", 800565222);
+        Repair repair = new Repair(
+                "Kamau",
+                "Nikia 3300",
+                "Nokia",
+                "Charging port",
+                "800565222");
         when(repairDao.selectRepairById(id))
                 .thenReturn(Optional.of(repair));
 
@@ -355,6 +448,7 @@ class RepairServiceTest {
                 repair.getBrand(),
                 repair.getphoneNumber(),
                 repair.getIssue()
+
         );
 
         assertThatThrownBy(() -> underTest.updateRepair(id, updateRequest))
@@ -363,8 +457,11 @@ class RepairServiceTest {
 
         verify(repairDao, never()).updateRepair(any());
 
-
     }
+
+
+
+
 
 
 }

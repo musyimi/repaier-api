@@ -28,7 +28,7 @@ public class RepairIntegrationTest {
                 "Gaga",
                 "Used",
                 "Not",
-                400455912
+                "400455912"
         );
 
         webTestClient.post()
@@ -55,7 +55,7 @@ public class RepairIntegrationTest {
                 "Bender",
                 "Used",
                 "Fit",
-                500455912
+                "500455912"
 
         );
 

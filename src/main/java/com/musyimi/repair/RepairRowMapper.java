@@ -16,7 +16,7 @@ public class RepairRowMapper implements RowMapper<Repair> {
                 rs.getString("title"),
                 rs.getString("issue"),
                 rs.getString("brand"),
-                rs.getInt("phone_number")
+                rs.getString("phone_number")
         );
         return repair;
     }

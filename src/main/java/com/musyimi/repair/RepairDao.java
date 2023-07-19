@@ -7,7 +7,7 @@ public interface RepairDao {
     List<Repair> selectAllRepairs();
     Optional<Repair> selectRepairById(Integer id);
     void insertRepair(Repair repair);
-    boolean existsPersonWithPhoneNumber(Integer phoneNumber);
+    boolean existsPersonWithPhoneNumber(String phoneNumber);
     boolean existsRepairWithId(Integer id);
     void deleteById(Integer id);
     void updateRepair(Repair update);

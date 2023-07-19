@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface RepairRepository extends JpaRepository<Repair, Integer> {
 
    @Query
-   boolean existsRepairByPhoneNumber(Integer phoneNumber);
+   boolean existsRepairByPhoneNumber(String phoneNumber);
 
    boolean existsRepairById(Integer id);
 

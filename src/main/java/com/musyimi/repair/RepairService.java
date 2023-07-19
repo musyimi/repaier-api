@@ -32,7 +32,7 @@ public class RepairService {
     public void addRepair(
             RepairRegistrationRequest repairRegistrationRequest) {
 
-        Integer phoneNumber = repairRegistrationRequest.phoneNumber();
+        String phoneNumber = repairRegistrationRequest.phoneNumber();
 
         if (repairDao.existsPersonWithPhoneNumber(repairRegistrationRequest.phoneNumber())) {
             throw new DuplicateResourceException(

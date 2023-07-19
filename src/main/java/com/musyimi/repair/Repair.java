@@ -1,6 +1,7 @@
 package com.musyimi.repair;
 
 import jakarta.persistence.*;
+import org.w3c.dom.Text;
 
 import java.util.Objects;
 
@@ -35,14 +36,14 @@ public class Repair {
     @Column(nullable = false)
     private String brand;
     @Column(nullable = false)
-    private Integer phoneNumber;
+    private String phoneNumber;
     @Column(nullable = false)
     private String issue;
 
     public Repair(){}
 
 
-    public Repair(Integer id, String name, String title, String brand, String issue, Integer phoneNumber) {
+    public Repair(Integer id, String name, String title, String brand, String issue, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.title = title;
@@ -51,7 +52,7 @@ public class Repair {
         this.phoneNumber = phoneNumber;
     }
 
-    public Repair( String name, String title, String brand, String issue, Integer phoneNumber) {
+    public Repair( String name, String title, String brand, String issue, String phoneNumber) {
         this.name = name;
         this.title = title;
         this.brand = brand;
@@ -63,11 +64,11 @@ public class Repair {
         return id;
     }
 
-    public Integer getphoneNumber() {
+    public String getphoneNumber() {
         return phoneNumber;
     }
 
-    public void setphoneNumber(Integer phoneNumber) {
+    public void setphoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

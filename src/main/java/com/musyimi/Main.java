@@ -33,7 +33,7 @@ public class Main {
                     faker.name().title(),
                     faker.company().name(),
                     faker.book().publisher(),
-                    faker.hashCode()
+                    faker.phoneNumber().cellPhone()
             );
 
             repairRepository.save(repair);
