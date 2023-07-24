@@ -6,7 +6,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5532/repair
+    url: jdbc:postgresql://localhost:5432/repair
     username: musyimi
     password: password
 

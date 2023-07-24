@@ -9,9 +9,21 @@ services:
     volumes:
       - db:/data/postgres
     ports:
-      - "5532:5432"
+      - "5432:5432"
     networks:
       - db
+    restart: unless-stopped
+  repair-api:
+    container_name: repair-api
+    image: musyimi/repair-api
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/repair
+    networks:
+      - db
+    depends_on:
+      - db
+    ports:
+      - "8088:8080"
     restart: unless-stopped
 
 networks:
