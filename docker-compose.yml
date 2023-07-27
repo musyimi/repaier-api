@@ -17,7 +17,7 @@ services:
     container_name: repair-api
     image: mwenekware/repair-api
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://awseb-e-yy3ebwbkpn-stack-awsebrdsdatabase-jwprp7jeoc5b.ces7iyo08tpt.eu-central-1.rds.amazonaws.com:5432/repair
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/repair
     networks:
       - db
     depends_on:

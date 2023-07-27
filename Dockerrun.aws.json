@@ -15,7 +15,7 @@
       "environment": [
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://db:5432/repair"
+          "value": "jdbc:postgresql://awseb-e-m49d9whkuh-stack-awsebrdsdatabase-j0hmevmggber.ces7iyo08tpt.eu-central-1.rds.amazonaws.com:5432/repair"
         }
       ]
     }

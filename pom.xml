@@ -18,7 +18,7 @@
 
 	<description>repair shop api</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -111,8 +111,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version>
 				<configuration>
-					<source>20</source>
-					<target>20</target>
+					<source>17</source>
+					<target>17</target>
 				</configuration>
 			</plugin>
 
@@ -181,7 +181,7 @@
 				<version>3.3.2</version>
 				<configuration>
 					<from>
-						<image>eclipse-temurin:20</image>
+						<image>eclipse-temurin:17</image>
 						<platforms>
 							<platform>
 								<architecture>arm64</architecture>
